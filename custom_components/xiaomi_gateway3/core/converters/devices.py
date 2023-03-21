@@ -1821,11 +1821,17 @@ DEVICES += [{
     ],
 }, {
     # brightness 1..100, color_temp 2700..6500
+    # https://home.miot-spec.com/s/10789
     10789: ["Zxgs", "Mesh Two Color Scene Light", "zxgs.light.bdcl01"],
     "spec": [
         Converter("light", "light", mi="2.p.1"),
         BrightnessConv("brightness", mi="2.p.2", parent="light", max=100),
         ColorTempKelvin("color_temp", mi="2.p.3", parent="light", mink=2700, maxk=6500),
+        BoolConv("flex_switch", "switch", mi="2.p.4", enabled=False),  # uint8
+        MapConv("mode", mi="2.p.5", map={
+            0: "Day", 1: "Night", 2: "Color", 3: "Warmth", 4: "Tv", 5: "Reading", 7: "Hospitality",
+            8: "Entertainment", 9: "Lighting", 10: "Night Light", 11: "Leisure", 12: "Baby", 6: "Computer"
+        })
     ]
 }, {
     "default": "mesh",  # default Mesh device
